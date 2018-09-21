@@ -197,7 +197,7 @@ public abstract class BaseWebSocketActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void onEventMainThread(WebSocketConnectionErrorEvent event) {
         Log.e(TAG, "WebSocketConnectionErrorEvent: ---------->"+event.toString());
-        toastShort(networkErrorTips);
+        myToast.ShowToastShort(networkErrorTips);
         connectType=0;
         onConnerctedFailed();
     }

@@ -4,22 +4,22 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.Toast;
 
 import com.bysj.xl.chess.mychess.Application.App;
 import com.bysj.xl.chess.mychess.Constant.C;
 import com.bysj.xl.chess.mychess.R;
+import com.bysj.xl.chess.mychess.WebSocketClient.IWebSocket;
 import com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent.WebSocketConnectedEvent;
 import com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent.WebSocketConnectionErrorEvent;
 import com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent.WebSocketErrorEvent;
 import com.bysj.xl.chess.mychess.WebSocketClient.Service.MyService;
-import com.bysj.xl.chess.mychess.WebSocketClient.IWebSocket;
 import com.bysj.xl.chess.mychess.entity.CommonResponse;
+import com.bysj.xl.chess.mychess.until.ToastUntil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -30,8 +30,9 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
     protected String TAG = this.getClass().getSimpleName();
     private IWebSocket mWebSocketService;
+    protected ToastUntil myToast;
 
-    private String networkErrorTips = "网络错误";
+    private String networkErrorTips = "服务器连接失败，请稍后重试";
 
     /**
      * 连接时机：</br>
@@ -68,7 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             mWebSocketService = null;
-            if (connectTime<= C.RECONNECT_TIME) {
+            if (connectTime <= C.RECONNECT_TIME) {
                 bindWebSocketService();
             }
         }
@@ -87,6 +88,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.ac_slide_right_in, R.anim.ac_slide_left_out);
+        myToast = new ToastUntil(this);
         setContentView();
         ButterKnife.bind(this);
         initView();
@@ -107,7 +109,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void onErrorResponse(WebSocketErrorEvent errorEvent);
 
     //TODO 发送信息至服务器
-    protected void senMsg(String msg){
+    protected void sendMsg(String msg) {
         if (mWebSocketService.getConnectStatus() == 2) {
 //            if (true){
             Log.i(TAG, "sendText: 已连接，发送数据");
@@ -194,9 +196,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onEventMainThread(WebSocketConnectedEvent event) {
         isConnect = true;
-        if (connectType== 2 && !sendText.isEmpty()) {
+        if (connectType == 2 && !sendText.isEmpty()) {
             Log.i(TAG, "onEventMainThread: -------------->senText");
-            senMsg(sendText);
+            sendMsg(sendText);
         } else if (connectType == 0) {
             Log.i(TAG, "onEventMainThread: ------------------->onServiceBindSuccess");
             onServiceBindSuccess();
@@ -212,7 +214,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onEventMainThread(WebSocketConnectionErrorEvent event) {
         Log.e(TAG, "WebSocketConnectionErrorEvent: ---------->" + event.toString());
-        toastShort(networkErrorTips);
+        myToast.ShowToastShort(networkErrorTips);
         connectType = 0;
         onConnerctedFailed();
     }
@@ -231,14 +233,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void toActivity(Class<?> toclass) {
         startActivity(new Intent(this, toclass));
-    }
-
-    public void toastShort(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
-
-    public void toastLong(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
     @Override

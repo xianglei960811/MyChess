@@ -3,19 +3,16 @@
     package="com.bysj.xl.chess.mychess">
 
     <application
+        android:name=".Application.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".Application.App"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name=".WebSocketClient.Service.WebSocketSerice">
+        <service android:name=".WebSocketClient.Service.WebSocketSerice"></service>
 
-        </service>
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.ForgetActivity"></activity>
     </application>
 
 </manifest>

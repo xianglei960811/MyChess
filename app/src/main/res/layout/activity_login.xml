@@ -62,10 +62,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:hint="账号/手机号"
+                    android:maxLength="11"
                     android:paddingLeft="10dp"
                     android:textColor="#FFF"
                     android:textColorHint="#d1caca"
                     android:textSize="35dp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -92,11 +94,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:hint="密码"
+                    android:hint="密码（8-12位）"
+                    android:maxLength="12"
                     android:paddingLeft="10dp"
                     android:textColor="#FFF"
                     android:textColorHint="#d1caca"
                     android:textSize="35dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/log_rember_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/log_cb_rember"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="记住账号"
+                    android:textColor="#d1caca"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/log_tv_forget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="right"
+                    android:text="忘记密码"
+                    android:textColor="#d1caca"
+                    android:textSize="25sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -135,7 +166,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_gravity="bottom"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
@@ -150,6 +180,25 @@
                     android:textSize="20sp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/log_imabt_qq"
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageButton
+                    android:layout_marginLeft="30dp"
+                    android:id="@+id/log_imabt_weChat"
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
         </LinearLayout>
 
