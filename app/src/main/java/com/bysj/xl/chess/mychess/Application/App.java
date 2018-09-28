@@ -5,9 +5,10 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import com.bysj.xl.chess.mychess.WebSocketClient.Service.WebSocketSerice;
+
 import java.util.ArrayList;
 import java.util.List;
-import com.bysj.xl.chess.mychess.WebSocketClient.Service.WebSocketSerice;
 
 public class App extends Application {
 
@@ -65,4 +66,6 @@ public class App extends Application {
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
     }
+
+
 }

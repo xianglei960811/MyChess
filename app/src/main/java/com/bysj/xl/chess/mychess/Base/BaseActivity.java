@@ -18,7 +18,6 @@ import com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent.WebSocketConnected
 import com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent.WebSocketConnectionErrorEvent;
 import com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent.WebSocketErrorEvent;
 import com.bysj.xl.chess.mychess.WebSocketClient.Service.MyService;
-import com.bysj.xl.chess.mychess.entity.CommonResponse;
 import com.bysj.xl.chess.mychess.until.ToastUntil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,8 +30,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected String TAG = this.getClass().getSimpleName();
     private IWebSocket mWebSocketService;
     protected ToastUntil myToast;
+    private long firstTime = 0;//记录用户首次点击返回键的事件
 
-    private String networkErrorTips = "服务器连接失败，请稍后重试";
+    private static String networkErrorTips = "服务器连接失败，请稍后重试";
 
     /**
      * 连接时机：</br>
@@ -45,7 +45,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     private volatile int connectType = 0;
     private String sendText;
     private volatile boolean isConnect = false;
-    private boolean networkReceiverIsRegister = false;
     private volatile int connectTime = 0;
 
 
@@ -102,14 +101,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract Class<? extends MyService> getWebsocketClass();
 
-    //TODO 读取服务器消息成功接口
-    protected abstract void onCommonResponse(CommonResponse<String> resonse);
-
     //TODO 接收信息失败，错误信息接口
     protected abstract void onErrorResponse(WebSocketErrorEvent errorEvent);
 
     //TODO 发送信息至服务器
     protected void sendMsg(String msg) {
+        Log.d(TAG, "sendMsg: " + msg);
         if (mWebSocketService.getConnectStatus() == 2) {
 //            if (true){
             Log.i(TAG, "sendText: 已连接，发送数据");
@@ -169,16 +166,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * 返回的
-     *
-     * @param event
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEventMainThread(CommonResponse<String> event) {
-        onCommonResponse(event);
-    }
-
-    /**
      * 错误信息
      *
      * @param event 错误信息事件
@@ -214,7 +201,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onEventMainThread(WebSocketConnectionErrorEvent event) {
         Log.e(TAG, "WebSocketConnectionErrorEvent: ---------->" + event.toString());
-        myToast.ShowToastShort(networkErrorTips);
+
         connectType = 0;
         onConnerctedFailed();
     }
@@ -224,6 +211,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     private void onConnerctedFailed() {
         Log.d(TAG, "onConnerctedFailed: ");
+        myToast.ShowToastShort(networkErrorTips);
     }
 
     public void toActivityWithFinish(Class<?> toclass) {
@@ -238,9 +226,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            finish();
-            return true;
+                && event.getAction() == KeyEvent.ACTION_DOWN) {
+            App.getInstance().removeActivity(this);
+            Long sceondTime = System.currentTimeMillis();
+            if (sceondTime - firstTime > 2000) {
+                myToast.ShowToastShort("再按一次推出程序");
+                firstTime = sceondTime;
+                return true;
+            } else {
+                System.exit(0);
+            }
+
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -249,5 +245,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void finish() {
         overridePendingTransition(R.anim.ac_slide_left_in, R.anim.ac_slide_right_out);
         super.finish();
+        Log.e(TAG, "finish: ");
+        App.getInstance().exitApp();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG, "onDestroy: ");
+//        mWebSocketService.stop();
+        unbindService(connection);
+        myToast.stopToast();
+        mWebSocketService = null;
     }
 }

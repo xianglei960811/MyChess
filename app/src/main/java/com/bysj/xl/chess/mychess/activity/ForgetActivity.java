@@ -7,7 +7,6 @@ import com.bysj.xl.chess.mychess.R;
 import com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent.WebSocketErrorEvent;
 import com.bysj.xl.chess.mychess.WebSocketClient.Service.MyService;
 import com.bysj.xl.chess.mychess.WebSocketClient.Service.WebSocketSerice;
-import com.bysj.xl.chess.mychess.entity.CommonResponse;
 
 public class ForgetActivity extends BaseActivity {
 
@@ -32,10 +31,6 @@ public class ForgetActivity extends BaseActivity {
         return WebSocketSerice.class;
     }
 
-    @Override
-    protected void onCommonResponse(CommonResponse<String> resonse) {
-
-    }
 
     @Override
     protected void onErrorResponse(WebSocketErrorEvent errorEvent) {

@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import com.bysj.xl.chess.mychess.Base.BaseActivity;
 import com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent.WebSocketErrorEvent;
 import com.bysj.xl.chess.mychess.WebSocketClient.Service.MyService;
-import com.bysj.xl.chess.mychess.entity.CommonResponse;
 
 import butterknife.BindView;
 
@@ -36,10 +35,6 @@ public class MainActivity extends BaseActivity{
         return null;
     }
 
-    @Override
-    protected void onCommonResponse(CommonResponse<String> resonse) {
-
-    }
 
     @Override
     protected void onErrorResponse(WebSocketErrorEvent errorEvent) {

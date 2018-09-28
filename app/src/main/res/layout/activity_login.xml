@@ -192,12 +192,6 @@
                     android:background="@null"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-                <ImageButton
-                    android:layout_marginLeft="30dp"
-                    android:id="@+id/log_imabt_weChat"
-                    android:background="@null"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </LinearLayout>

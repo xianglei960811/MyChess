@@ -1,10 +1,15 @@
 package com.bysj.xl.chess.mychess.Constant;
 
 public class C {
-    public static final String BASE_PATH = "ws://10.120.4.183:100/MyService/websocket";
+    public static final String BASE_PATH = "ws://10.120.4.115:100/MyChessServer/websocket";
+
     //sp标签
     public static final String IS_REMBER_NAME = "IsRember";
     public static final Boolean IS_REMBER = false;
+    public static final String USER_NAME_NAME="user_name";
+    public static final String USER_NAME = "admin";
+    public static final String PASS_WORD_NAME = "pass_word";
+    public static final String PASS_WORD = "123";
 
     //谁赢的常量
     public static final int ISWIN_NOT_WIN = 0;
@@ -25,4 +30,6 @@ public class C {
     public static final String LOGIN_PHONE = "log_Phone";
     public static final String LOGIN_QQ= "log_qq";
     public static final String LOGIN_WECHAT= "log_weChat";
+    //错误
+    public static final String NO_QQ_USER = "NO_QQ_USER";
 }

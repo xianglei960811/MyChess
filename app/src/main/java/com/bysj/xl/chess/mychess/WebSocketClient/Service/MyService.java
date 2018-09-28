@@ -8,12 +8,12 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.bysj.xl.chess.mychess.Constant.C;
 import com.bysj.xl.chess.mychess.WebSocketClient.IWebSocket;
 import com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent.DisconnectedEvent;
 import com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent.WebSocketConnectedEvent;
 import com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent.WebSocketConnectionErrorEvent;
 import com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent.WebSocketErrorEvent;
+import com.bysj.xl.chess.mychess.WebSocketClient.MsgHandler;
 import com.neovisionaries.ws.client.ProxySettings;
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
@@ -35,6 +35,7 @@ import java.util.Map;
 public abstract class MyService extends Service implements IWebSocket {
     private static final String TAG = "MyService";
     private static final int TIME_OUT = 1000;
+    protected MsgHandler msgHandler = new MsgHandler(this);
 
     private WebSocketFactory factory = new WebSocketFactory().setConnectionTimeout(TIME_OUT);
 
@@ -234,7 +235,7 @@ public abstract class MyService extends Service implements IWebSocket {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
+        Log.e(TAG, "onDestroy: ");
         isStop = true;
         webSocket.disconnect();
         webSocket.flush();
@@ -242,4 +243,10 @@ public abstract class MyService extends Service implements IWebSocket {
         connectStatus = 0;
     }
 
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+        Log.e(TAG, "onTaskRemoved: 推出app" );
+        stop();
+    }
 }
