@@ -62,7 +62,7 @@
                     android:hint="用户昵称"
                     android:textColor="#FFF"
                     android:textColorHint="#d1caca"
-                    android:textSize="35sp" />
+                    android:textSize="30sp" />
 
             </LinearLayout>
 
@@ -94,7 +94,7 @@
                     android:hint="密码（8-12位 ）"
                     android:textColor="#FFF"
                     android:textColorHint="#d1caca"
-                    android:textSize="35sp" />
+                    android:textSize="30sp" />
 
             </LinearLayout>
 
@@ -126,7 +126,7 @@
                     android:hint="手机号"
                     android:textColor="#FFF"
                     android:textColorHint="#d1caca"
-                    android:textSize="35sp" />
+                    android:textSize="30sp" />
 
             </LinearLayout>
 
@@ -159,7 +159,7 @@
                     android:maxLength="6"
                     android:textColor="#FFF"
                     android:textColorHint="#d1caca"
-                    android:textSize="35sp" />
+                    android:textSize="30sp" />
 
                 <Button
                     android:id="@+id/reg_bt_sendPhone"
@@ -169,7 +169,7 @@
                     android:padding="10dp"
                     android:text="获取"
                     android:textColor="#FFF"
-                    android:textSize="35sp" />
+                    android:textSize="30sp" />
             </LinearLayout>
 
             <LinearLayout

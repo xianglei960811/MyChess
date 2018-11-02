@@ -1,8 +1,12 @@
 package com.bysj.xl.chess.mychess.activity;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -49,6 +53,8 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+
+import static com.bysj.xl.chess.mychess.entity.getBitdrawable.getBitdrawble.getbitDrawable;
 
 public class LoginActivity extends BaseActivity {
     @BindView(R.id.login_user_et)
@@ -113,23 +119,38 @@ public class LoginActivity extends BaseActivity {
         log_sigIn_bt.setHeight(height);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void initImag() {
         //todo 加载vector图标
-
+        String version_RELEASE = Build.VERSION.SDK;
         Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_user);
-        drawable = ReSizeDrawable.revector(this, (BitmapDrawable) drawable);
-        log_user_ima.setImageDrawable(drawable);
-
         Drawable drawable1 = ContextCompat.getDrawable(this, R.drawable.ic_pass);
-        drawable1 = ReSizeDrawable.revector(this, (BitmapDrawable) drawable1);
-        log_pass_ima.setImageDrawable(drawable1);
-
         Drawable drawable2 = ContextCompat.getDrawable(this, R.drawable.sigin);
-        drawable2 = ReSizeDrawable.relog(this, (BitmapDrawable) drawable2);
-        log_log_ima.setImageDrawable(drawable2);
-
         Drawable drawable3 = ContextCompat.getDrawable(this, R.drawable.ic_qq);
-        drawable3 = ReSizeDrawable.revector(this, (BitmapDrawable) drawable3);
+        if (Integer.parseInt(version_RELEASE)>=22) {
+            drawable = ReSizeDrawable.revector(this, getbitDrawable((VectorDrawable) drawable));
+
+            drawable1 = ReSizeDrawable.revector(this, (getbitDrawable((VectorDrawable) drawable1)));
+
+            drawable2 = ReSizeDrawable.relog(this, (BitmapDrawable) drawable2);
+
+            drawable3 = ReSizeDrawable.revector(this, (getbitDrawable((VectorDrawable) drawable3)));
+        } else {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            drawable = ReSizeDrawable.revector(this, bitmapDrawable.getBitmap());
+
+            BitmapDrawable bitmapDrawabl1 = (BitmapDrawable) drawable1;
+            drawable1 = ReSizeDrawable.revector(this, bitmapDrawabl1.getBitmap());
+
+            BitmapDrawable bitmapDrawabl2 = (BitmapDrawable) drawable2;
+            drawable2 = ReSizeDrawable.revector(this, bitmapDrawabl2.getBitmap());
+
+            BitmapDrawable bitmapDrawable3 = (BitmapDrawable) drawable3;
+            drawable3 = ReSizeDrawable.revector(this, bitmapDrawable3.getBitmap());
+        }
+        log_user_ima.setImageDrawable(drawable);
+        log_pass_ima.setImageDrawable(drawable1);
+        log_log_ima.setImageDrawable(drawable2);
         log_imaBt_qq.setImageDrawable(drawable3);
     }
 
@@ -210,26 +231,28 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * QQ登陆返回
+     *
      * @param QQevent
      */
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void logQQEvent(LogQQEvent QQevent) {
         Log.e(TAG, "logQQEvent: " + QQevent.getMsg());
-        if (QQevent.getMsg().equals(C.NO_QQ_USER)){
-            Log.e(TAG, "logQQEvent: 无此QQ用户" );
+        if (QQevent.getMsg().equals(C.NO_QQ_USER)) {
+            Log.e(TAG, "logQQEvent: 无此QQ用户");
             return;
         }
     }
 
     /**
      * 手机账号登录成功返回值
+     *
      * @param Phoneevent
      */
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void logPhonevent(LogPhoneEvent<TencentUser> Phoneevent) {
-        SharedPreferencesUtils.setParam(this,C.IS_REMBER_NAME,isRember);
+        SharedPreferencesUtils.setParam(this, C.IS_REMBER_NAME, isRember);
         if (isRember) {
-            Log.d(TAG, "logPhonevent:ssssssss "+user_name+":"+pass );
+            Log.d(TAG, "logPhonevent:ssssssss " + user_name + ":" + pass);
             SharedPreferencesUtils.setParam(this, C.USER_NAME_NAME, user_name);
             SharedPreferencesUtils.setParam(this, C.PASS_WORD_NAME, pass);
         }
@@ -237,17 +260,19 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * AccountID登录成功订阅事件
+     *
      * @param accountIDEvent
      */
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky =  true)
-    public void logAccountIDevent(LogAccountIDEvent<TencentUser> accountIDEvent){
-        SharedPreferencesUtils.setParam(this,C.IS_REMBER_NAME,isRember);
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void logAccountIDevent(LogAccountIDEvent<TencentUser> accountIDEvent) {
+        SharedPreferencesUtils.setParam(this, C.IS_REMBER_NAME, isRember);
         if (isRember) {
-            Log.d(TAG, "logAccount:ssssssss "+user_name+":"+pass );
+            Log.d(TAG, "logAccount:ssssssss " + user_name + ":" + pass);
             SharedPreferencesUtils.setParam(this, C.USER_NAME_NAME, user_name);
             SharedPreferencesUtils.setParam(this, C.PASS_WORD_NAME, pass);
         }
     }
+
     @Override
     protected void onErrorResponse(WebSocketErrorEvent errorEvent) {
         Log.e(TAG, "onErrorResponse: " + errorEvent.getMsg());

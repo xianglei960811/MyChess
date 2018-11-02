@@ -1,7 +1,10 @@
 package com.bysj.xl.chess.mychess.activity;
 
+import android.annotation.TargetApi;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -20,6 +23,8 @@ import com.bysj.xl.chess.mychess.entity.ReSizeDrawable.ReSizeDrawable;
 import com.bysj.xl.chess.mychess.entity.getScreenSize.ScreenSizeUtils;
 
 import butterknife.BindView;
+
+import static com.bysj.xl.chess.mychess.entity.getBitdrawable.getBitdrawble.getbitDrawable;
 
 public class SinUpActivity extends BaseActivity {
     @BindView(R.id.reg_ima_name)
@@ -62,6 +67,7 @@ public class SinUpActivity extends BaseActivity {
         intit();
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void intit() {
         //TODO 初始化控件，并设置长款
         int width = ScreenSizeUtils.getInstance(this).getScreenWidth() / 3 * 2;
@@ -77,7 +83,7 @@ public class SinUpActivity extends BaseActivity {
         reg_bt_sendPhone.setWidth(width / 2);
 
         Drawable drawable3 = ContextCompat.getDrawable(this, R.drawable.ic_message);
-        drawable3 = ReSizeDrawable.revector(this, (BitmapDrawable) drawable3);
+        drawable3 = ReSizeDrawable.revector(this, (getbitDrawable((VectorDrawable) drawable3)));
         reg_ima_code.setImageDrawable(drawable3);
 
         int temp = ((BitmapDrawable) drawable3).getBitmap().getWidth();
@@ -89,15 +95,15 @@ public class SinUpActivity extends BaseActivity {
     private void initviews() {
         //TODO 加载vector
         Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_user_name);
-        drawable = ReSizeDrawable.revector(this, (BitmapDrawable) drawable);
+//        drawable = ReSizeDrawable.revector(this, (BitmapDrawable) drawable);
         reg_ima_name.setImageDrawable(drawable);
 
         Drawable drawable1 = ContextCompat.getDrawable(this, R.drawable.ic_user_password);
-        drawable1 = ReSizeDrawable.revector(this, (BitmapDrawable) drawable1);
+//        drawable1 = ReSizeDrawable.revector(this, (BitmapDrawable) drawable1);
         reg_ima_pass.setImageDrawable(drawable1);
 
         Drawable drawable2 = ContextCompat.getDrawable(this, R.drawable.ic_phone);
-        drawable2 = ReSizeDrawable.revector(this, (BitmapDrawable) drawable2);
+//        drawable2 = ReSizeDrawable.revector(this, (BitmapDrawable) drawable2);
         reg_ima_phone.setImageDrawable(drawable2);
 
 
