@@ -46,7 +46,8 @@
                 android:paddingBottom="15dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingTop="15dp">
+                android:paddingTop="15dp"
+                >
 
                 <ImageView
                     android:id="@+id/log_user_ima"
@@ -66,7 +67,7 @@
                     android:paddingLeft="10dp"
                     android:textColor="#FFF"
                     android:textColorHint="#d1caca"
-                    android:textSize="35dp" />
+                    android:textSize="30dp" />
 
             </LinearLayout>
 
@@ -99,7 +100,7 @@
                     android:paddingLeft="10dp"
                     android:textColor="#FFF"
                     android:textColorHint="#d1caca"
-                    android:textSize="35dp" />
+                    android:textSize="30dp" />
             </LinearLayout>
 
             <LinearLayout
