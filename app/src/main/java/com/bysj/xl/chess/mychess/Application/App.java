@@ -3,9 +3,10 @@ package com.bysj.xl.chess.mychess.Application;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
+import android.util.Log;
 
-import com.bysj.xl.chess.mychess.WebSocketClient.Service.WebSocketSerice;
+import com.bysj.xl.chess.mychess.WebSocket.ForegroundCallbacks;
+import com.bysj.xl.chess.mychess.WebSocket.WbManager.WsManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +24,29 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        context =getApplicationContext();
+        context = getApplicationContext();
         instance = this;
-        Intent intent = new Intent(this,WebSocketSerice.class);
-        startService(intent);
+//        startService(intent);
+        initAppStatusListener();
+        WsManager.getINSTANCE().init();
     }
-    public  static Context getContext(){
+
+    private void initAppStatusListener() {
+        ForegroundCallbacks.init(this).addListener(new ForegroundCallbacks.Listener() {
+            @Override
+            public void onBecameForeground() {
+                Log.i("APP", "应用回到前台，调用重连 ");
+                WsManager.getINSTANCE().reConnect();
+            }
+
+            @Override
+            public void onBecameBackground() {
+
+            }
+        });
+    }
+
+    public static Context getContext() {
         return context;
     }
 
@@ -52,6 +70,7 @@ public class App extends Application {
             act.finish();
         }
     }
+
     /**
      * 退出app
      */

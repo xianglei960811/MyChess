@@ -89,12 +89,11 @@ public class ReSizeDrawable {
      * 对vector图标缩放
      *
      * @param context
-     * @param drawable
      * @return
      */
-    public static BitmapDrawable revector(Context context, BitmapDrawable drawable) {
+    public static BitmapDrawable revector(Context context, Bitmap bitmap) {
         int mScreenWidth = ScreenSizeUtils.getInstance(context).getScreenWidth();
-        Bitmap bitmap = drawable.getBitmap();
+//        Bitmap bitmap = drawable.getBitmap();
         int bitmapWidth = bitmap.getWidth();
         int bitmapHeight = bitmap.getHeight();
 
@@ -117,7 +116,7 @@ public class ReSizeDrawable {
             return reSizeDrawable;
         } else {
             Log.d("ReSize", "revector:is same--------------------> ");
-            return drawable;
+            return new BitmapDrawable(context.getResources(),bitmap);
         }
     }
 

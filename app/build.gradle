@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.mob.sdk'
+MobSDK {
+    appKey "281247ab5ab8b"
+    appSecret "03fc9dd249fa9e47a0362ca2ac31b92c"
+    SMSSDK {}
+}
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -16,6 +21,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
@@ -36,4 +42,5 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.33'
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation files('libs/open_sdk_r6019_lite.jar')
+    implementation 'com.github.bumptech.glide:glide:3.5.2'
 }

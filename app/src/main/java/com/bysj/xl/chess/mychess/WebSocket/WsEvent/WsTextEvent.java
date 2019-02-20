@@ -1,14 +1,14 @@
-package com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent;
+package com.bysj.xl.chess.mychess.WebSocket.WsEvent;
 
 /**
  * author:向磊
- * date:2018/9/17
- * Describe:错误事件
+ * date:2018/12/21
+ * Describe:接收消息事件
  */
-public class WebSocketErrorEvent {
+public class WsTextEvent {
     String msg;
 
-    public WebSocketErrorEvent(String msg) {
+    public WsTextEvent(String msg) {
         this.msg = msg;
     }
 

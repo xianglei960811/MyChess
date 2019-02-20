@@ -13,6 +13,24 @@ public class User {
     String usr_Sex;
     String usr_cretTime;
     String user_name;
+    String user_headIma;
+    String user_grade;
+
+    public String getUser_grade() {
+        return user_grade;
+    }
+
+    public void setUser_grade(String user_grade) {
+        this.user_grade = user_grade;
+    }
+
+    public String getUser_headIma() {
+        return user_headIma;
+    }
+
+    public void setUser_headIma(String user_headIma) {
+        this.user_headIma = user_headIma;
+    }
 
     public String getUser_name() {
         return user_name;

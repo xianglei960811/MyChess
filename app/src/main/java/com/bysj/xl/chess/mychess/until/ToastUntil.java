@@ -1,6 +1,7 @@
 package com.bysj.xl.chess.mychess.until;
 
 import android.content.Context;
+import android.os.Looper;
 import android.widget.Toast;
 
 /**
@@ -20,16 +21,30 @@ public class ToastUntil {
      *
      * @param text
      */
-    public void ShowToastShort( String text) {
-        if(toast == null)
-        {
+    public void ShowToastShort(final String text) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                if (toast == null) {
+                    toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);  //正常执行
+                } else {
+                    toast.setText(text);  //用于覆盖前面未消失的提示信息
+                }
+                toast.show();
+                Looper.loop();
+            }
+        }).start();
+    }
+
+    //主线程中显示
+    public void showToastMain(String text) {
+        if (toast == null) {
             toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);  //正常执行
-        }
-        else {
+        } else {
             toast.setText(text);  //用于覆盖前面未消失的提示信息
         }
         toast.show();
-
     }
 
     /**

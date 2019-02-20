@@ -92,6 +92,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
                     android:hint="密码（8-12位 ）"
+                    android:maxLength="12"
                     android:textColor="#FFF"
                     android:textColorHint="#d1caca"
                     android:textSize="35sp" />
@@ -169,6 +170,7 @@
                     android:padding="10dp"
                     android:text="获取"
                     android:textColor="#FFF"
+                    android:layout_marginRight="10dp"
                     android:textSize="35sp" />
             </LinearLayout>
 

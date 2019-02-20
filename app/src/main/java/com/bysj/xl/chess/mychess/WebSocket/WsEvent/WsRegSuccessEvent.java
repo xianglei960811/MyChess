@@ -1,14 +1,14 @@
-package com.bysj.xl.chess.mychess.WebSocketClient.MessageEvent.LogEvent;
+package com.bysj.xl.chess.mychess.WebSocket.WsEvent;
 
 /**
  * author:向磊
- * date:2018/9/26
- * Describe:
+ * date:2018/12/21
+ * Describe:注册成功事件
  */
-public class LogAccountIDEvent<T> {
+public class WsRegSuccessEvent<T> {
     T data;
 
-    public LogAccountIDEvent(T data) {
+    public WsRegSuccessEvent(T data) {
         this.data = data;
     }
 

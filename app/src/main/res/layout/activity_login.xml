@@ -189,9 +189,9 @@
 
                 <ImageButton
                     android:id="@+id/log_imabt_qq"
-                    android:background="@null"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:background="@null" />
             </LinearLayout>
 
         </LinearLayout>

@@ -35,4 +35,6 @@ public class TencentUser extends User {
         WeChat = weChat;
     }
 
+
+
 }
