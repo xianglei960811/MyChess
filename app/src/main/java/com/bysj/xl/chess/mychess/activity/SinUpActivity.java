@@ -272,6 +272,7 @@ public class SinUpActivity extends BaseActivity {
         Log.e(TAG, "OnRegistSuccessEvent: ");
         myToast.ShowToastShort("注册成功");
         EventBus.getDefault().removeStickyEvent(event);
+        toActivityWithFinish(MainGameActivity.class);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.bumptech.glide.request.target.Target;
 import com.bysj.xl.chess.mychess.Base.BaseActivity;
 import com.bysj.xl.chess.mychess.Constant.C;
 import com.bysj.xl.chess.mychess.R;
+import com.bysj.xl.chess.mychess.entity.LoadImage;
 import com.bysj.xl.chess.mychess.until.SharedPreferencesUtils;
 
 import butterknife.BindView;
@@ -52,7 +54,7 @@ public class MainGameActivity extends BaseActivity {
             myToast.showToastMain("还没上传头像呢");
         } else {
             byte[] bytes_headIma = Base64.decode(user_headImags, Base64.DEFAULT);
-            loadHeadIma(bytes_headIma);
+            LoadImage.getINSTANCE(MainGameActivity.this).loadHeadImage(bytes_headIma,gameMainImaHead);
         }
 
     }
@@ -88,34 +90,4 @@ public class MainGameActivity extends BaseActivity {
     public void onBtRulerClick() {
     }
 
-    /**
-     * 加载头像
-     *
-     * @param bytes_headIma
-     */
-    private void loadHeadIma(byte[] bytes_headIma) {
-        Log.d(TAG, "loadHeadIma: ----------------------->");
-        Drawable drawable_place = ContextCompat.getDrawable(this, R.drawable.ic_waiting);
-        Drawable drawable_error = ContextCompat.getDrawable(this, R.drawable.ic_error);
-        Glide.with(this)
-                .load(bytes_headIma)
-                .placeholder(drawable_place)
-                .listener(new RequestListener<byte[], GlideDrawable>() {
-                    @Override
-                    public boolean onException(Exception e, byte[] model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        Log.e(TAG, "onException: 加载失败：======================》" + e.getMessage());
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource, byte[] model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        Log.d(TAG, "onResourceReady: ----------------------->加载成功");
-                        return false;
-                    }
-                })
-                .error(drawable_error)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(gameMainImaHead);
-
-    }
 }

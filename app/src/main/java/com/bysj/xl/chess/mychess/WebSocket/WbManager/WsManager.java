@@ -139,7 +139,7 @@ public class WsManager {
                 reConnectTime = temp > maxInterval ? maxInterval : temp;
             }
             Log.e(TAG, "准备开始第" + reConnectCount + "次重连，间隔为：" + reConnectTime);
-            toastUntil.ShowToastShort("服务器连接失败，正在重试第"+reConnectCount+"次重连......");
+//            toastUntil.ShowToastShort("服务器连接失败，正在重试第"+reConnectCount+"次重连......");
             mHandler.postDelayed(mReconnectTask, reConnectTime);
 
         }

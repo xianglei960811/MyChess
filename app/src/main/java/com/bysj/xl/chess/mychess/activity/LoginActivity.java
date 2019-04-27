@@ -160,7 +160,7 @@ public class LoginActivity extends BaseActivity {
         Boolean rember = (Boolean) SharedPreferencesUtils.getParam(this, C.IS_REMBER_NAME, C.IS_REMBER);
         log_cb_rember.setChecked(rember);
         if (rember) {
-            login_user_et.setText((String) SharedPreferencesUtils.getParam(this, C.USER_PHONE_NAME, C.USER_PHONE));
+            login_user_et.setText((String) SharedPreferencesUtils.getParam(this, C.USER_NAME_NAME, C.USER_NAME));
             log_pass_et.setText((String) SharedPreferencesUtils.getParam(this, C.PASS_WORD_NAME, C.PASS_WORD));
         }
 
@@ -240,13 +240,41 @@ public class LoginActivity extends BaseActivity {
         SharedPreferencesUtils.setParam(this, C.IS_REMBER_NAME, isRember);
         if (isRember) {
             Log.d(TAG, "logAccount:ssssssss " + event.getData().getUsr_phone() + ":" + event.getData().getUsr_passWord());
-            SharedPreferencesUtils.setParam(this, C.USER_PHONE_NAME, event.getData().getUsr_phone());
             SharedPreferencesUtils.setParam(this, C.PASS_WORD_NAME, event.getData().getUsr_passWord());
         }
-        SharedPreferencesUtils.setParam(this,C.USER_NAME_NAME,event.getData().getUser_headIma());
-        SharedPreferencesUtils.setParam(this,C.USER_HEAD_NAME,event.getData().getUser_name());
-        SharedPreferencesUtils.setParam(this,C.USER_GRADE_NAME,event.getData().getUser_grade());
+        String name = event.getData().getUser_name();
+        String QQ = event.getData().getQQ();
+//        String headIma = event.getData().getUser_headIma();
+        String phone = event.getData().getUsr_phone();
+        String grade = event.getData().getUser_grade();
+        String sex = event.getData().getUsr_Sex();
+        int age = event.getData().getUsr_age();
+        String cretTime = event.getData().getUsr_cretTime();
+        if (name != null) {
+            SharedPreferencesUtils.setParam(this, C.USER_NAME_NAME, event.getData().getUser_name());
+        }
+        if (QQ != null) {
+            SharedPreferencesUtils.setParam(this, C.USER_QQ_NAME, event.getData().getQQ());
+        }
+//        if (headIma != null) {
+//            SharedPreferencesUtils.setParam(this, C.USER_HEAD_NAME, event.getData().getUser_headIma());
+//        }
+        if (phone != null) {
+            SharedPreferencesUtils.setParam(this, C.USER_PHONE_NAME, event.getData().getUsr_phone());
+        }
+        if (grade != null) {
+            SharedPreferencesUtils.setParam(this, C.USER_GRADE_NAME, event.getData().getUser_grade());
+        }
+        if (sex != null) {
+            SharedPreferencesUtils.setParam(this, C.USER_SEX_NAME, event.getData().getUsr_Sex());
+        }
+            SharedPreferencesUtils.setParam(this, C.USER_AGE_NAME, event.getData().getUsr_age());
+        if (cretTime != null) {
+            SharedPreferencesUtils.setParam(this, C.USER_CREAT_TIME_NAME, event.getData().getUsr_cretTime());
+        }
         EventBus.getDefault().removeStickyEvent(event);
+
+        toActivityWithFinish(MainGameActivity.class);
     }
 
 

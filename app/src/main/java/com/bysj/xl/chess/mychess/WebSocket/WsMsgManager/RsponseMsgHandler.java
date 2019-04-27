@@ -2,8 +2,6 @@ package com.bysj.xl.chess.mychess.WebSocket.WsMsgManager;
 
 import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.bysj.xl.chess.mychess.Constant.C;
 import com.bysj.xl.chess.mychess.WebSocket.WbManager.WsInterface;
 import com.bysj.xl.chess.mychess.WebSocket.WbManager.WsManager;
@@ -11,10 +9,17 @@ import com.bysj.xl.chess.mychess.WebSocket.WsEvent.WsForgetPassSuccessEvent;
 import com.bysj.xl.chess.mychess.WebSocket.WsEvent.WsForgetPhoneSuccessEvent;
 import com.bysj.xl.chess.mychess.WebSocket.WsEvent.WsLogSuccessEvent;
 import com.bysj.xl.chess.mychess.WebSocket.WsEvent.WsRegSuccessEvent;
+import com.bysj.xl.chess.mychess.WebSocket.WsEvent.WsUserAllSUccessEvent;
+import com.bysj.xl.chess.mychess.WebSocket.WsEvent.WsUserPhoneSuccessEvent;
 import com.bysj.xl.chess.mychess.WebSocket.WsException;
 import com.bysj.xl.chess.mychess.entity.Response;
+import com.bysj.xl.chess.mychess.entity.TencentUser;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.lang.reflect.Type;
 
 /**
  * author:向磊
@@ -28,8 +33,11 @@ public class RsponseMsgHandler extends MsgManager implements WsInterface {
     protected void dispatchResponse(String responseMsg) {
         Log.e("消息处理者", "dispatchResponse: " + responseMsg);
         try {
-            Response response = JSON.parseObject(responseMsg, new TypeReference<Response>() {
-            });
+            Type type = new TypeToken<Response<TencentUser>>() {
+            }.getType();
+            Response<TencentUser> response = new Gson().fromJson(responseMsg, type);
+//            Response response = JSON.parseObject(responseMsg, new TypeReference<Response>() {
+//            });
             if (response == null) {
                 Log.e("消息处理者", "来自服务器消息为空");
                 return;
@@ -51,11 +59,11 @@ public class RsponseMsgHandler extends MsgManager implements WsInterface {
      * @param response
      */
     private void dispatchMsg(Response response) {
-        String type = response.getUsr_response_type().substring(0, 3);
-        switch (type) {
+        String type = response.getUsr_response_type();
+        switch (type.substring(0, 3)) {
             case C.LoGING:
                 EventBus.getDefault().postSticky(new WsLogSuccessEvent(response.getData()));
-                Log.e("handler", "dispatchMsg: _>log*-");
+                Log.e("handler", "dispatchMsg: _>log*-" + response.getData());
                 break;
             case C.SIGN_UP_MODE:
                 EventBus.getDefault().postSticky(new WsRegSuccessEvent(response.getData()));
@@ -66,6 +74,14 @@ public class RsponseMsgHandler extends MsgManager implements WsInterface {
                 } else if (response.getUsr_response_type().equals(C.FORGET_PASSWORD)) {
                     EventBus.getDefault().postSticky(new WsForgetPassSuccessEvent(response.getData()));
                 }
+                break;
+            case C.user_MODE:
+                if (type.equals(C.USE_ALL)) {
+                    EventBus.getDefault().postSticky(new WsUserAllSUccessEvent());
+                }else if (type.equals(C.USE_PHONE)){
+                    EventBus.getDefault().postSticky(new WsUserPhoneSuccessEvent());
+                }
+                Log.e("q11111", "dispatchMsg: ------------------>" );
                 break;
             default:
                 break;

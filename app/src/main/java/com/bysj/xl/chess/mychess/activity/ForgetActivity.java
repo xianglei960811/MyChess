@@ -100,8 +100,8 @@ public class ForgetActivity extends BaseActivity {
         phone = forEtPhone.getText().toString().trim();
         if (ReCheck.checkPhoneNum(phone)) {
             Request request = new Request();
-            request.setUsr_request_type(C.FORGET_PHONE);
             TencentUser user = new TencentUser();
+            request.setUsr_request_type(C.FORGET_PHONE);
             user.setUsr_phone(phone);
             request.setData(user);
             request.setMsg("check phone is exist");

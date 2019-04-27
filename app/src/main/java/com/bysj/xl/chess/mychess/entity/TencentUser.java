@@ -1,40 +1,26 @@
 package com.bysj.xl.chess.mychess.entity;
 
 /**
- * author:向磊
- * date:2018/9/22
- * Describe:腾讯用户实体类（qq,微信）
+ * author:鍚戠 date:2018/9/22 Describe:鑵捐鐢ㄦ埛瀹炰綋绫伙紙qq,寰俊锛�
  */
 public class TencentUser extends User {
-    String QQopenID;
-    int QQ;
+	String QQopenID;
+	String QQ;
 
-    String WeChat;
+	public String getQQopenID() {
+		return QQopenID;
+	}
 
-    public String getQQopenID() {
-        return QQopenID;
-    }
+	public void setQQopenID(String QQopenID) {
+		this.QQopenID = QQopenID;
+	}
 
-    public void setQQopenID(String QQopenID) {
-        this.QQopenID = QQopenID;
-    }
+	public String getQQ() {
+		return QQ;
+	}
 
-    public int getQQ() {
-        return QQ;
-    }
-
-    public void setQQ(int QQ) {
-        this.QQ = QQ;
-    }
-
-    public String getWeChat() {
-        return WeChat;
-    }
-
-    public void setWeChat(String weChat) {
-        WeChat = weChat;
-    }
-
-
+	public void setQQ(String qQ) {
+		QQ = qQ;
+	}
 
 }

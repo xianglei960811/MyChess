@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pop_LL"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#adadad"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
+
+    <Button
+        android:id="@+id/pop_bt_choose_pictue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="选择本地照片"
+        android:textColor="#000"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/pop_bt_make_picture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拍    照"
+        android:textColor="#000"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="5dp"
+        android:background="#000" />
+
+    <Button
+        android:id="@+id/pop_bt_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:text="取    消"
+        android:textColor="#000"
+        android:textSize="30sp" />
+
+</LinearLayout>
